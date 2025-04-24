@@ -29,17 +29,6 @@ export default {
 
 <style>
 /* Enter Classes */
-/* .toast-enter-from {
-  opacity: 0;
-  transform: translateY(-60px);
-}
-.toast-enter-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-.toast-enter-active {
-  transition: all 0.3s ease;
-} */
 
 /* leave Class */
 .toast-leave-from {
