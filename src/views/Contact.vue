@@ -16,10 +16,10 @@ import { ref } from "vue";
 export default {
   setup() {
     const icons = ref([
-      { name: "alternate_email", text: "by email" },
-      { name: "local_phone", text: "by phone" },
-      { name: "local_post_office", text: "by post" },
-      { name: "local_fire_department", text: "by smoke signal" },
+      { name: "Alternate Email", text: "by email" },
+      { name: "Local Phone", text: "by phone" },
+      { name: "Local Post Office", text: "by post" },
+      { name: "Local Fire Department", text: "by smoke signal" },
     ]);
 
     return { icons };
