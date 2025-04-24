@@ -2,15 +2,11 @@
   <div class="about">
     <transition
       appear
-      name="fade"
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter"
-      @before-leave="beforeLeave"
-      @leave="leave"
-      @after-leave="afterLeave"
     >
-      <h1 v-if="showTitle">About</h1>
+      <h1>About</h1>
     </transition>
 
     <p>
@@ -35,45 +31,35 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import gsap from "gsap";
 
 export default {
   setup() {
-    const showTitle = ref(true);
-
-    //Enter
     const beforeEnter = (el) => {
-      console.log("beforeEnter", el);
-    };
-    const enter = (el) => {
-      console.log("enter", el);
-    };
-    const afterEnter = (el) => {
-      el.style.color = "green";
-      console.log("afterEnter", el);
+      console.log("before enter - set initial state");
 
-      setTimeout(() => (showTitle.value = false), 2000);
+      el.style.transform = "translateY(-60px)";
+      el.style.opacity = 0;
     };
-    //Leave
-    const beforeLeave = (el) => {
-      el.style.color = "pink";
-      console.log("beforeLeave", el);
+    const enter = (el, done) => {
+      console.log("starting to enter - make transition");
+      gsap.to(el, {
+        duration: 3,
+        y: 0,
+        opacity: 1,
+        ease: "bounce.out",
+        onComplete: done,
+      });
     };
-    const leave = (el) => {
-      console.log("leave", el);
-    };
-    const afterLeave = (el) => {
-      console.log("afterLeave", el);
+
+    const afterEnter = () => {
+      console.log("after enter");
     };
 
     return {
       beforeEnter,
       enter,
       afterEnter,
-      beforeLeave,
-      leave,
-      afterLeave,
-      showTitle,
     };
   },
 };
@@ -87,22 +73,5 @@ export default {
 .about p {
   text-align: justify;
   margin-bottom: 30px;
-}
-
-.fade-enter-from {
-  opacity: 0;
-}
-/* .fade-enter-to {
-  opacity: 1;
-  rotate: 360deg;
-} */
-.fade-enter-active {
-  transition: opacity 0.3s ease;
-}
-.fade-leave-to {
-  opacity: 0;
-}
-.fade-leave-active {
-  transition: opacity 0.3s ease;
 }
 </style>
