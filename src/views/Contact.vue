@@ -1,33 +1,54 @@
 <template>
   <div class="contact">
     <h1>Contact</h1>
-    <ul>
-      <li v-for="icon in icons" :key="icon.name">
+    <transition-group
+      appear
+      tag="ul"
+      @before-enter="beforeEnter"
+      @enter="enter"
+    >
+      <li v-for="(icon, index) in icons" :key="icon.name" :data-index="index">
         <span class="material-icons">{{ icon.name }}</span>
         <div>{{ icon.text }}</div>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import { ref } from "vue";
+import gsap from "gsap";
 
 export default {
   setup() {
     const icons = ref([
-      { name: "Alternate Email", text: "by email" },
-      { name: "Local Phone", text: "by phone" },
-      { name: "Local Post Office", text: "by post" },
-      { name: "Local Fire Department", text: "by smoke signal" },
+      { name: "alternate_email", text: "by email" },
+      { name: "local_phone", text: "by phone" },
+      { name: "local_post_office", text: "by post" },
+      { name: "local_fire_department", text: "by smoke signal" },
     ]);
 
-    return { icons };
+    const beforeEnter = (el) => {
+      el.style.opacity = 0;
+      el.style.transform = "translateY(100px)";
+    };
+
+    const enter = (el, done) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        onComplete: done,
+        delay: el.dataset.index * 0.6,
+      });
+    };
+
+    return { icons, beforeEnter, enter };
   },
 };
 </script>
-  
-  <style>
+
+<style>
 .contact ul {
   padding: 0;
   display: grid;
